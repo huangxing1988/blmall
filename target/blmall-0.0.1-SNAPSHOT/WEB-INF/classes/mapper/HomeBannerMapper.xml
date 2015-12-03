@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bl.mall.dao.HomeBannarDao">
+
+
+		<sql id = "homebannarColumns">
+		     a.BANNAR_ID as bannarId,
+		     a.BANNAR_DES_HEAD as bannarDesHead,
+		     a.BANNAR_DES_FOOT as  bannarDesFoot,
+		     a.BANNAR_IMAGE_ID as bannarImageId,
+		     a.STATE as state,
+		     a.CREATE_DATE as createDate,
+		     a.USE_DATE as useDate,
+		     a.UNUSE_DATE as unUseDate,
+		     a.DEL_FLAG as delFlag,
+		     a.PRIORITY as priority,
+		     a.SORT as sort
+		</sql>
+
+
+
+
+
+        <select id="getHomeBannars" resultType = "HomeBannar" >
+                 select 
+                 <include refid="homebannarColumns"/>
+                 from 
+                 HOME_BANNAR a
+                 where
+                 1=1
+                 <if test="state !=null and state!=''">
+                   and  a.state = #{state}
+                 </if>    
+                 <if  test = "delFlag!='' and delFlag!=null">
+                   and  a.del_flag = #{delFlag};
+                 </if>
+                 <if test = "priority!='' and priority!=null">
+                   and a.priority = #{priority}
+                 </if>
+                 <if test = "sort =!'' and sort != null">
+                     order by  a.sort desc
+                 </if>
+        </select>
+          
+</mapper>
